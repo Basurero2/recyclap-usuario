@@ -64,7 +64,7 @@ function checkAuth() {
     const currentUser = localStorage.getItem('ecopoints_current_user');
 
     if (!currentUser) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return false;
     }
 
@@ -80,7 +80,7 @@ function checkAuth() {
         return true;
     }
 
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
     return false;
 }
 
@@ -88,7 +88,7 @@ function handleLogout() {
     if (confirm('¿Estás seguro de cerrar sesión?')) {
         saveUserData();
         localStorage.removeItem('ecopoints_current_user');
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }
 }
 
@@ -361,3 +361,4 @@ window.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('beforeunload', () => {
     saveUserData();
 });
+
