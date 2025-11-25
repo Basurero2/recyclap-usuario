@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RECYCLA'P - Dashboard</title>
+    <meta name="description" content="Gana puntos reciclando botellas y canjéalos por descuentos">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-left">
+                <svg class="header-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 6h18l-1.68 11.76a2 2 0 0 1-2 1.74H6.68a2 2 0 0 1-2-1.74L3 6z" />
+                    <circle cx="12" cy="8" r="3" fill="currentColor" />
+                </svg>
+                <span class="header-title">RECYCLA'P</span>
+            </div>
+            <button class="btn-logout" onclick="handleLogout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                Cerrar Sesión
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="app-main">
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view active">
+            <div class="dashboard-hero">
+                <div class="points-card">
+                    <p class="points-label">Tus EcoPoints</p>
+                    <h2 class="points-value" id="points-display">0</h2>
+                    <div class="points-badge">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <polygon
+                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                        </svg>
+                        <span id="user-name">Usuario</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h3 class="section-title">Acciones Rápidas</h3>
+                <div class="action-grid">
+                    <button class="action-card" onclick="showView('scanner')">
+                        <div class="action-icon scan">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" />
+                                <path d="M9 9h.01M9 15h.01M15 9h.01M15 15h.01" />
+                            </svg>
+                        </div>
+                        <h4>Escanear QR</h4>
+                        <p>Registra tu reciclaje</p>
+                    </button>
+                    <button class="action-card" onclick="showView('rewards')">
+                        <div class="action-icon rewards">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="8" r="7" />
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+                            </svg>
+                        </div>
+                        <h4>Recompensas</h4>
+                        <p>Canjea tus puntos</p>
+                    </button>
+                    <button class="action-card" onclick="showView('history')">
+                        <div class="action-icon history">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <h4>Historial</h4>
+                        <p>Ver actividad</p>
+                    </button>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <h3 class="section-title">Estadísticas</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                        <div>
+                            <p class="stat-value" id="total-earned">0</p>
+                            <p class="stat-label">Puntos Ganados</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        <div>
+                            <p class="stat-value" id="bottles-recycled">0</p>
+                            <p class="stat-label">Botellas Recicladas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scanner View -->
+        <div id="scanner-view" class="view">
+            <div class="view-header">
+                <button class="btn-back" onclick="showView('dashboard')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                </button>
+                <h2>Escanear QR</h2>
+            </div>
+            <div class="scanner-container">
+                <div class="scanner-frame">
+                    <div class="scanner-overlay">
+                        <div class="scan-corners"></div>
+                        <svg class="qr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M9 9h.01M9 15h.01M15 9h.01M15 15h.01" />
+                        </svg>
+                    </div>
+                </div>
+                <p class="scanner-instruction">Coloca el código QR del tacho dentro del marco</p>
+                <button class="btn btn-primary btn-simulate" onclick="simulateScan()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="23 4 23 10 17 10" />
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                    </svg>
+                    Escanear QR
+                </button>
+            </div>
+        </div>
+
+        <!-- Rewards View -->
+        <div id="rewards-view" class="view">
+            <div class="view-header">
+                <button class="btn-back" onclick="showView('dashboard')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                </button>
+                <h2>Recompensas</h2>
+            </div>
+            <div class="rewards-container">
+                <div class="rewards-points-banner">
+                    <div class="rewards-points-content">
+                        <span class="rewards-points-label">Tus Puntos Disponibles</span>
+                        <span class="rewards-points-value" id="rewards-points-display">0</span>
+                    </div>
+                </div>
+                <div class="rewards-grid" id="rewards-grid">
+                    <!-- Rewards will be populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- History View -->
+        <div id="history-view" class="view">
+            <div class="view-header">
+                <button class="btn-back" onclick="showView('dashboard')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                </button>
+                <h2>Historial</h2>
+            </div>
+            <div class="history-container">
+                <div class="history-list" id="history-list">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="16" x2="12" y2="12" />
+                            <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                        <p>No hay actividad aún</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="showView('dashboard')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+            <span>Inicio</span>
+        </button>
+        <button class="nav-item" onclick="showView('scanner')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M9 9h.01M9 15h.01M15 9h.01M15 15h.01" />
+            </svg>
+            <span>Escanear</span>
+        </button>
+        <button class="nav-item" onclick="showView('rewards')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="8" r="7" />
+                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+            </svg>
+            <span>Recompensas</span>
+        </button>
+        <button class="nav-item" onclick="showView('history')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <span>Historial</span>
+        </button>
+    </nav>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
